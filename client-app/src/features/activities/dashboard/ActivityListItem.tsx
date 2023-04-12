@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Item, Button, Icon, Segment } from 'semantic-ui-react'
+import { Item, Button, Icon, Segment, Label } from 'semantic-ui-react'
 import { Activity } from '../../../app/models/activity'
 import { format } from 'date-fns'
 import ActivityListItemAttendee from './ActivityListItemAttendee'
@@ -17,7 +17,23 @@ export default function ActivityListItem({ activity }: Props) {
             <Item.Image size='tiny' circular src='/assets/user.png' />
             <Item.Content>
               <Item.Header as='a'>{activity.title}</Item.Header>
-              <Item.Description>Hosted by Bob</Item.Description>
+              <Item.Description>
+                Hosted by {activity.host?.displayName}
+              </Item.Description>
+              {activity.isHost && (
+                <Item.Description>
+                  <Label basic color='orange'>
+                    You are hosting this activity
+                  </Label>
+                </Item.Description>
+              )}
+              {activity.isGoing && !activity.isHost && (
+                <Item.Description>
+                  <Label basic color='green'>
+                    You are going to this activity
+                  </Label>
+                </Item.Description>
+              )}
             </Item.Content>
           </Item>
         </Item.Group>
